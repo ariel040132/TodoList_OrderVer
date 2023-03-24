@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 
 //import express
 const express = require("express");
-// const exphbs = require("express-handlebars");
+const exphbs = require("express-handlebars");
 const app = express();
 
 mongoose.connect(process.env.MONGODB_URI, {
@@ -13,6 +13,9 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 
+//路由
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 //資料庫
 const db = mongoose.connection;
 db.on("error", () => {
@@ -22,12 +25,8 @@ db.once("open", () => {
   console.log("mongodb connected!");
 });
 
-// //路由
-// app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
-// app.set("view engine", "handlebars");
-
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.render("index");
 });
 
 app.listen(3000, () => {
