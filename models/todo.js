@@ -1,3 +1,4 @@
+//MVC－ MODEL：負責管資料的
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
