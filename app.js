@@ -9,7 +9,7 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const app = express();
 const Todo = require("./models/todo");
-console.log(Todo);
+
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -46,6 +46,15 @@ app.post("/todos", (req, res) => {
   return Todo.create({ name }) // 存入資料庫
     .then(() => res.redirect("/")) // 新增完成後導回首頁
     .catch(() => console.log(error));
+});
+
+app.get("/todos/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(Todo.findById(id));
+  return Todo.findById(id)
+    .lean() //撈資料以後想用 res.render()，就要先用 .lean()
+    .then((todo) => res.render("detail", { todo }))
+    .catch((error) => console.log(error));
 });
 
 app.listen(3000, () => {
