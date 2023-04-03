@@ -4,6 +4,24 @@ const router = express.Router();
 const Todo = require("../../models/todo");
 
 //! 引入路由模組
+
+router.get("/sort", (req, res) => {
+  const sortType = req.query.order;
+  if (sortType === "asc") {
+    Todo.find()
+      .lean()
+      .sort({ _id: "asc" })
+      .then((todos) => res.render("index", { todos }))
+      .catch((error) => console.log(err));
+  } else if (sortType === "desc") {
+    Todo.find()
+      .lean()
+      .sort({ _id: "desc" })
+      .then((todos) => res.render("index", { todos }))
+      .catch((error) => console.log(err));
+  }
+});
+
 //! 新增功能
 router.get("/new", (req, res) => {
   return res.render("new");
@@ -56,5 +74,15 @@ router.delete("/:id", (req, res) => {
     .then(() => res.redirect("/"))
     .catch((error) => console.log(error));
 });
+//! try asc or desc
+// router.get("/order", (req, res) => {
+//   console.log(req.body.orderList);
+// Todo.find()
+//     .lean()
+//     .sort({ _id: "desc" })
+//     .then((todos) => res.render("index", { todos }))
+//     .catch((err) => console.log(err));
+// });
+
 //! 匯出路由
 module.exports = router;
