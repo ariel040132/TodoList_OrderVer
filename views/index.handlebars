@@ -1,10 +1,18 @@
 {{!-- 兩者的相別是三花括 {{{}}} 可以解析 HTML 內容，而雙花括 {{}} 會把內容當成單純的字串。 --}}
 {{! action="/order" }}
-<select id="sort-select">
-  <option value="">請選擇排列順序</option>
-  <option value="asc">從小到大</option>
-  <option value="desc">從大到小</option>
-</select>
+
+<div style="width: max-content;">
+  <select
+    id="sort-select"
+    class="form-select"
+    aria-label="Default select example"
+  >
+    <option value="">請選擇排列順序</option>
+    <option value="asc">從小到大</option>
+    <option value="desc">從大到小</option>
+  </select>
+</div>
+
 <script>
   const selectElement = document.getElementById('sort-select');
   selectElement.addEventListener('change', (event) => { const sortType =
@@ -17,8 +25,8 @@
     <li class="list-group-item">
       <div class="row">
         <div class="col-auto me-auto">
-          <input style="vertical-align: middle;" type="checkbox" name="isDone" {{#if this.isDone }} checked {{/if}}
-            disabled>
+          {{!-- <input style="vertical-align: middle;" type="checkbox" name="isDone" {{#if this.isDone }} checked {{/if}}
+            disabled> --}}
           <h4 style="display: inline; vertical-align: middle;">
             {{this.name}}
           </h4>
